@@ -1,13 +1,13 @@
-
+#' @export
 drift_diffusion <- function(bias = 0.5,
                             driftrate = 1.0,
                             decision_boundary = 40,
                             ndt = 0.5,
                             dt = 0.01) {
-    
+
     # Outputs a sequence of Brownian motion data
     bias <- as.integer(2 * decision_boundary * bias - decision_boundary)
-    
+
     # make sure time_steps is big enough
     time_steps <- 6000
     dv <- array(dim = time_steps)
@@ -33,7 +33,7 @@ drift_diffusion <- function(bias = 0.5,
         }
     }
     # dv <- dv[!is.na(dv)]
-    out <- dplyr::tibble(time = round(seq_along(dv)/60, 2), 
+    out <- dplyr::tibble(time = round(seq_along(dv)/60, 2),
                          dv = dv,
                          steps = seq_along(dv))
     # invisible(dv)
