@@ -25,7 +25,7 @@ drift_diffusion <- function(bias = 0.5,
     # rescale bias so that 0.5 lies halfway between upper and lower bound
     bias <- as.integer(2 * decision_boundary * bias - decision_boundary)
 
-    # initialise time_steps and dv
+    # initialize time_steps and dv
     time_steps <- max_time/dt
     dv <- array(dim = time_steps)
 
@@ -35,13 +35,18 @@ drift_diffusion <- function(bias = 0.5,
     for (j in 2:time_steps) {
 
         # non-decision time
-        if (j < ndt/dt) {
+        if (j <= ndt/dt) {
             dv[j] <- rnorm(1, mean = bias, sd = sqrt(dt))
         }
         else {
-        error <- rnorm(1, 0, sqrt(diffvar * dt))
-        dv[j] <- dv[j-1] + driftrate * dt + error  # Cobb & Zacks (1985), Eq. 1.14
-        if (abs(dv[j]) > decision_boundary) break()
+            error <- rnorm(1, 0, sqrt(diffvar * dt))
+            dv[j] <- dv[j-1] + driftrate * dt + error  # Cobb & Zacks (1985), Eq. 1.14
+            if (abs(dv[j]) > decision_boundary) {
+                dv[j] <- if_else(dv[j] > 0,
+                                 min(dv[j], decision_boundary),
+                                 max(dv[j], -decision_boundary))
+                break()
+            }
         }
     }
     # dv <- dv[!is.na(dv)]
