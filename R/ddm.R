@@ -40,11 +40,8 @@ drift_diffusion <- function(bias = 0.5,
         }
         else {
         error <- rnorm(1, 0, sqrt(diffvar * dt))
-        if (abs(dv[j-1]) > decision_boundary) break()
-        # dv[j:time_steps] <-  NA
-        else {
-            dv[j] <- dv[j-1] + driftrate * dt + error  # Cobb & Zacks (1985), Eq. 1.14
-        }
+        dv[j] <- dv[j-1] + driftrate * dt + error  # Cobb & Zacks (1985), Eq. 1.14
+        if (abs(dv[j]) > decision_boundary) break()
         }
     }
     # dv <- dv[!is.na(dv)]
