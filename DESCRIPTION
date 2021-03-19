@@ -1,5 +1,5 @@
 Package: kogpsy
-Title: What the Package Does (One Line, Title Case)
+Title: Computational Cognitive Modelling
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Andrew",
@@ -7,11 +7,15 @@ Authors@R:
            role = c("aut", "cre"),
            email = "andrewellis@pm.me",
            comment = c(ORCID = "0000-0002-2788-936X"))
-Description: What the package does (one paragraph).
+Description: This and that, for use in cognitive modelling
 License: CC0
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
-    dplyr
+    assertthat (>= 0.2.1),
+    dplyr (>= 1.0.0)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

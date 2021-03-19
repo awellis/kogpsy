@@ -1,18 +1,33 @@
+#' Generate a discrete-time diffusion process
+#'
+#' @param bias Starting point \[0, 1\]. 0.5 means no bias.
+#' @param driftrate Average rate of evidence accumulation.
+#' @param decision_boundary Symmetric absorbing boundaries.
+#' @param ndt Non-decision time, in seconds.
+#' @param diffvar Diffusion variance---must be > 0.
+#' @param max_time Maximum duration of trial.
+#' @return A tibble containing \code{time}, the decision variable \code{dv} and the step number \code{steps}.
+#' @examples
+#' drift_diffusion(bias = 0.3, driftrate = 0.8)
+#' drift_diffusion(bias = 0.5, driftrate = -1.0, decision_boundary = 2.5, diffvar = 0.8)
+#'
 #' @export
 drift_diffusion <- function(bias = 0.5,
                             driftrate = 1.0,
-                            decision_boundary = 40,
+                            decision_boundary = 2,
                             ndt = 0.5,
-                            dt = 0.01) {
+                            diffvar = 0.1,
+                            dt = 0.001,
+                            max_time = 6) {
+
+    assertthat::assert_that(diffvar > 0)
 
     # Outputs a sequence of Brownian motion data
     bias <- as.integer(2 * decision_boundary * bias - decision_boundary)
 
     # make sure time_steps is big enough
-    time_steps <- 6000
+    time_steps <- max_time/dt
     dv <- array(dim = time_steps)
-
-    diffvar <- 2
 
     # start acumulating from bias (starting point)
     dv[1] <- rnorm(1, mean = bias, sd = sqrt(dt))
@@ -33,7 +48,7 @@ drift_diffusion <- function(bias = 0.5,
         }
     }
     # dv <- dv[!is.na(dv)]
-    out <- dplyr::tibble(time = round(seq_along(dv)/60, 2),
+    out <- dplyr::tibble(time = round(seq_along(dv) * dt, 2),
                          dv = dv,
                          steps = seq_along(dv))
     # invisible(dv)
