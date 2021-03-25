@@ -58,7 +58,8 @@ drift_diffusion <- function(bias = 0.5,
                          steps = seq_along(dv),
                          driftrate = driftrate,
                          decision_boundary = decision_boundary,
-                         bias = bias)
+                         bias = bias,
+                         ndt = ndt)
     # invisible(dv)
     return(out)
 }
