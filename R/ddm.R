@@ -42,7 +42,7 @@ drift_diffusion <- function(bias = 0.5,
             error <- rnorm(1, 0, sqrt(diffvar * dt))
             dv[j] <- dv[j-1] + driftrate * dt + error  # Cobb & Zacks (1985), Eq. 1.14
             if (abs(dv[j]) > decision_boundary) {
-                dv[j] <- if_else(dv[j] > 0,
+                dv[j] <- dplyr::if_else(dv[j] > 0,
                                  min(dv[j], decision_boundary),
                                  max(dv[j], -decision_boundary))
                 break()
