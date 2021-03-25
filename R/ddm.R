@@ -18,7 +18,8 @@ drift_diffusion <- function(bias = 0.5,
                             ndt = 0.5,
                             diffvar = 0.1,
                             dt = 0.001,
-                            max_time = 6) {
+                            max_time = 6,
+                            ndt_noise = FALSE) {
 
     assertthat::assert_that(diffvar > 0)
 
@@ -36,7 +37,9 @@ drift_diffusion <- function(bias = 0.5,
 
         # non-decision time
         if (j <= ndt/dt) {
-            dv[j] <- rnorm(1, mean = bias, sd = sqrt(dt))
+            dv[j] <- dplyr::if_else(ndt_noise,
+                                    rnorm(1, mean = bias, sd = sqrt(dt)),
+                                    bias)
         }
         else {
             error <- rnorm(1, 0, sqrt(diffvar * dt))
