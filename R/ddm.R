@@ -24,7 +24,7 @@ drift_diffusion <- function(bias = 0.5,
     assertthat::assert_that(diffvar > 0)
 
     # rescale bias so that 0.5 lies halfway between upper and lower bound
-    bias <- as.integer(2 * decision_boundary * bias - decision_boundary)
+    bias <- as.numeric(2 * decision_boundary * bias - decision_boundary)
 
     # initialize time_steps and dv
     time_steps <- max_time/dt
