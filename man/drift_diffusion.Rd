@@ -11,7 +11,8 @@ drift_diffusion(
   ndt = 0.5,
   diffvar = 0.1,
   dt = 0.001,
-  max_time = 6
+  max_time = 6,
+  ndt_noise = FALSE
 )
 }
 \arguments{

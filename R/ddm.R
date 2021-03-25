@@ -37,7 +37,7 @@ drift_diffusion <- function(bias = 0.5,
 
         # non-decision time
         if (j <= ndt/dt) {
-            dv[j] <- dplyr::if_else(ndt_noise,
+            dv[j] <- ifelse(ndt_noise,
                                     rnorm(1, mean = bias, sd = sqrt(dt)),
                                     bias)
         }
