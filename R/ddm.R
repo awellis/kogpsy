@@ -55,7 +55,9 @@ drift_diffusion <- function(bias = 0.5,
     # dv <- dv[!is.na(dv)]
     out <- dplyr::tibble(time = round(seq_along(dv) * dt, 2),
                          dv = dv,
-                         steps = seq_along(dv))
+                         steps = seq_along(dv),
+                         decision_boundary = decision_boundary,
+                         bias = bias)
     # invisible(dv)
     return(out)
 }
