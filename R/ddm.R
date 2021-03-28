@@ -53,7 +53,7 @@ drift_diffusion <- function(bias = 0.5,
         }
     }
     # dv <- dv[!is.na(dv)]
-    out <- dplyr::tibble(time = round(seq_along(dv) * dt, 2),
+    d <- dplyr::tibble(time = round(seq_along(dv) * dt, 2),
                          dv = dv,
                          steps = seq_along(dv),
                          driftrate = driftrate,
@@ -61,5 +61,18 @@ drift_diffusion <- function(bias = 0.5,
                          bias = bias,
                          ndt = ndt)
     # invisible(dv)
-    return(out)
+    return(d)
+}
+
+
+#' @export
+get_response_rt <- function(d) {
+    time <- pull(d, time)
+    dv <- pull(d, dv)
+    decision_boundary <- pull(d, decision_boundary)[1]
+
+    index <- tail(which(!is.na(dv)), 1)
+    rt <- time[index]
+    response <- sign(dv[index])
+    list(response = response, rt = rt)
 }
