@@ -42,5 +42,4 @@ Generate a multilevel data for a treatment factor with two levels
 d <- simulate_data()
 d_linpred <- d |>
     d |>group_by(subject, treatment) |> distinct(mu, .keep_all = TRUE)
-
 }

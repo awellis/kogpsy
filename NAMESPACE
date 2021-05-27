@@ -3,3 +3,5 @@
 export(drift_diffusion)
 export(get_response_rt)
 export(simulate_treament)
+import(dplyr)
+import(tidyr)

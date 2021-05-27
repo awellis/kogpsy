@@ -13,6 +13,8 @@
 #' d <- simulate_data()
 #' d_linpred <- d |>
 #'     d |>group_by(subject, treatment) |> distinct(mu, .keep_all = TRUE)
+#' @import dplyr
+#' @import tidyr
 #'
 #' @export
 simulate_treament <- function(a = 3.5,
@@ -25,15 +27,15 @@ simulate_treament <- function(a = 3.5,
                           sigma = 0.5) {
 
     # Ccombine the terms
-    mu     <- c(a, b)
+    mu <- c(a, b)
     cov_ab <- sigma_a * sigma_b * rho
-    sigma  <- matrix(c(sigma_a^2, cov_ab,
+    SD  <- matrix(c(sigma_a^2, cov_ab,
                        cov_ab, sigma_b^2), ncol = 2)
 
     varying_effects <-
-        MASS::mvrnorm(n_subjects, mu, sigma) |>
+        MASS::mvrnorm(n_subjects, mu, SD) |>
         as_tibble(.name_repair = "unique") |>
-        set_names("a_j", "b_j")
+        purrr::set_names("a_j", "b_j")
 
     d_linpred <-
         varying_effects |>
