@@ -34,7 +34,8 @@ simulate_treament <- function(a = 3.5,
 
     varying_effects <-
         MASS::mvrnorm(n_subjects, mu, SD) |>
-        as_tibble(.name_repair = "unique") |>
+        # as_tibble(.name_repair = "unique") |>
+        data.frame() |>
         purrr::set_names("a_j", "b_j")
 
     d_linpred <-
