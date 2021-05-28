@@ -12,7 +12,7 @@
 #' @examples
 #' d <- simulate_data()
 #' d_linpred <- d |>
-#'     d |>group_by(subject, treatment) |> distinct(mu, .keep_all = TRUE)
+#'     group_by(subject, treatment) |> distinct(mu, .keep_all = TRUE)
 #' @import dplyr
 #' @import tidyr
 #'
